@@ -1,5 +1,5 @@
 {
-  "name": "chargehound",
+  "name": "chargehound-music-store",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -12,10 +12,14 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "body-parser": "^1.18.2",
+    "chargehound": "^2.2.0",
     "express": "^4.16.2",
     "next": "^5.0.0",
     "react": "^16.2.0",
-    "react-dom": "^16.2.0"
+    "react-dom": "^16.2.0",
+    "react-stripe-checkout": "^2.6.3",
+    "stripe": "^5.4.0"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
