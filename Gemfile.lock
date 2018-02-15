@@ -1,0 +1,15 @@
+GEM
+  remote: https://rubygems.org/
+  specs:
+    json (2.1.0)
+    ultrahook (0.1.4)
+      json (>= 1.8.0)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  ultrahook (~> 0.1.4)
+
+BUNDLED WITH
+   1.16.1
