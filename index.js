@@ -22,22 +22,22 @@ const songsDatabase = [
 
   {
     id: '2',
-    song_artist: 'Hound of Love',
-    song_name: 'Rivers Edge',
+    song_artist: 'Sheer Mag',
+    song_name: 'Expect The Bayonet',
     amount: 500,
   },
 
   {
     id: '3',
-    song_artist: 'Hound of Love',
-    song_name: 'Rivers Edge',
+    song_artist: 'Cloud Nothings',
+    song_name: "Can't Stay Awake",
     amount: 300,
   },
 
   {
     id: '4',
-    song_artist: 'Hound of Love',
-    song_name: 'Rivers Edge',
+    song_artist: 'Tax Payers',
+    song_name: 'Everything Is Awful',
     amount: 100,
   }
 ]
@@ -48,8 +48,7 @@ app.prepare().then(() => {
 
   server.post('/api/chargehound-webhook', async (request, response) => {
     console.log('POST /api/chargehound-webhook');
-    // Retrieve the request's body and parse it as JSON
-    var eventJson = request.body;
+    const eventJson = request.body;
 
     // 1) Handle the dispute.created event
     if (!eventJson ||
@@ -57,46 +56,52 @@ app.prepare().then(() => {
       return response.sendStatus(500);
     }
 
-    // The id of the dispute.
-    // The id used by your payment processor is also used by Chargehound.
-    var disputeId = eventJson.dispute;
+    const disputeId = eventJson.dispute;
+    let dispute = null;
+    let charge = null;
 
     try {
-      const dispute = await stripe.disputes.retrieve(disputeId)
+      dispute = await stripe.disputes.retrieve(disputeId)
       console.log('fetched dispute from stripe ', disputeId);
-      console.log(dispute);
     }catch(err){
       console.error('failed to fetch a dispute from stripe ', disputeId);
       console.error(err);
       return response.sendStatus(500);
     }
 
+    try {
+      console.log("retrive charge from stripe");
+      charge = await stripe.charges.retrieve(dispute.charge);
+    }catch(err){
+      console.log('unable to retrive charge matching dispute');
+      console.error(err);
+      return response.sendStatus(500);
+    }
+
+    console.log("what is charge?", charge.metadata);
+
     console.log('sending dispute evidence to chargehound...');
     try{
-      const chres = chargehound.Disputes.submit(disputeId, {
+      const chres = chargeHound.Disputes.submit(disputeId, {
         template: 'song-purchase',
         fields: {
-          'purchase_url': 'www.example.com',
-          'song_artist': 'example text',
-          'song_name': 'example text'
+          'purchase_url': charge.metadata.purchase_url,
+          'song_artist': charge.metadata.song_artist,
+          'song_name': charge.metadata.song_name
         }
       });
       return response.sendStatus(200);
     }catch(err){
-      console.error('error form chargehound ', 500);
+      console.error('error form chargehound ',);
+      console.log(err);
       return response.sendStatus(500);
     }
-
-
-
   });
 
   server.post('/api/charge-stripe-token', async (req, res) => {
     console.log("POST /api/charge-stripe-token");
     const token = req.body.token;
     const item = req.body.item;
-
-    console.log(req.body);
 
     if(!token || !token.object){
       return res.sendStatus(500);
@@ -113,7 +118,7 @@ app.prepare().then(() => {
         source: token.id,
         currency: 'usd',
         capture: true,
-        metatdata: item
+        metadata: item
       });
 
       console.log('stripe charge success');
