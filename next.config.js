@@ -1,2 +1,7 @@
 const withSass = require('@zeit/next-sass')
-module.exports = withSass()
+module.exports = Object.assign({},
+                               withSass(),
+                               {
+                                 distDir: 'dist/.next'
+                               }
+);
