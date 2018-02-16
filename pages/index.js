@@ -1,7 +1,6 @@
 import fetch from 'isomorphic-unfetch'
 import Head from 'next/head';
 import SongContainer from '../components/SongContainer';
-
 import "../styles.scss"
 
 export default class IndexPage extends React.Component{
