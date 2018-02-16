@@ -89,9 +89,10 @@ app.prepare().then(() => {
           'song_artist': charge.metadata.song_artist,
           'song_name': charge.metadata.song_name,
           'customer_email': charge.metadata.customer_email,
-          'charge_statement_descriptor': charge.description
+          'charge_statement_descriptor': "Online Music Store"
         }
       });
+      console.log("chargehound success");
       return response.sendStatus(200);
     }catch(err){
       console.error('error form chargehound ',);
@@ -120,9 +121,8 @@ app.prepare().then(() => {
         source: token.id,
         currency: 'usd',
         capture: true,
-        description: `online music store purchase ${item.song_artist} - ${item.song_name}`,
         metadata: {
-          ...item
+          ...item,
           customer_email: token.email
         }
       });

@@ -1,0 +1,66 @@
+body, html {
+  padding: 0px;
+  margin: 0px;
+  height: 100%;
+  font-family: sans-serif;
+}
+
+.index-container {
+  text-align:center;
+  width: 100%;
+}
+
+.song-container-row {
+  display: inline-block;
+  margin: 0 auto;
+}
+
+.song-container{
+  display:block;
+  float:left;
+  padding: 10px;
+  width: 150px;
+}
+
+.song-artist, .song-name {
+  margin: 0px;
+  padding: 2px;
+}
+
+.song-image {
+  background: #CCC;
+  display: block;
+  width: 100%;
+  height: 100px;
+  margin-bottom: 5px;
+}
+
+
+//generated from http://css3buttongenerator.com/
+button {
+  background: #d2d4d6;
+  background-image: -webkit-linear-gradient(top, #d2d4d6, #535a5e);
+  background-image: -moz-linear-gradient(top, #d2d4d6, #535a5e);
+  background-image: -ms-linear-gradient(top, #d2d4d6, #535a5e);
+  background-image: -o-linear-gradient(top, #d2d4d6, #535a5e);
+  background-image: linear-gradient(to bottom, #d2d4d6, #535a5e);
+  -webkit-border-radius: 7;
+  -moz-border-radius: 7;
+  border-radius: 7px;
+  font-family: Arial;
+  color: #ffffff;
+  font-size: 20px;
+  padding: 10px 20px 10px 20px;
+  border: solid #767a7d 1px;
+  text-decoration: none;
+}
+
+button:hover {
+  background: #d7dfe3;
+  background-image: -webkit-linear-gradient(top, #d7dfe3, #3a444a);
+  background-image: -moz-linear-gradient(top, #d7dfe3, #3a444a);
+  background-image: -ms-linear-gradient(top, #d7dfe3, #3a444a);
+  background-image: -o-linear-gradient(top, #d7dfe3, #3a444a);
+  background-image: linear-gradient(to bottom, #d7dfe3, #3a444a);
+  text-decoration: none;
+}

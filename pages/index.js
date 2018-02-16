@@ -1,5 +1,8 @@
 import fetch from 'isomorphic-unfetch'
+import Head from 'next/head';
 import SongContainer from '../components/SongContainer';
+
+import "../styles.scss"
 
 export default class IndexPage extends React.Component{
   constructor(props, context){
@@ -33,22 +36,21 @@ export default class IndexPage extends React.Component{
         }
       }),
     }).then(response => {
-      response.json().then(data => {
-        alert(`We are in business, ${data}`);
-      });
       this.setState({ waitingOnPurchase: false });
     });
   }
 
   render(){
     return (
-      <div>
+      <div className="index-container">
         <h1>Online Music Store</h1>
-        <div>
+        <div className="song-container-row">
           {this.props.songs.map((song, index) => <SongContainer
                                                    song={song}
                                                    buyHandler={this.checkoutItem}
-                                                   key={index} />)}
+                                                   key={index}
+                                                   disabled={this.state.waitingOnPurchase}/>
+          )}
         </div>
       </div>
     );
