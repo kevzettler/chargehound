@@ -10,7 +10,9 @@ const app = next({ dir: '.', dev });
 const handle = app.getRequestHandler()
 
 const stripe = stripeInit(process.env.STRIPE_SECRET_KEY);
-const chargeHound = chargeHoundInit(process.env.CHARGEHOUND_KEY);
+const chargeHound = chargeHoundInit(process.env.CHARGEHOUND_KEY, {
+  host: 'test-api.chargehound.com'
+});
 
 const songsDatabase = [
   {
@@ -78,8 +80,6 @@ app.prepare().then(() => {
       return response.sendStatus(500);
     }
 
-    console.log("what is charge?", charge.metadata);
-
     console.log('sending dispute evidence to chargehound...');
     try{
       const chres = chargeHound.Disputes.submit(disputeId, {
@@ -87,7 +87,9 @@ app.prepare().then(() => {
         fields: {
           'purchase_url': charge.metadata.purchase_url,
           'song_artist': charge.metadata.song_artist,
-          'song_name': charge.metadata.song_name
+          'song_name': charge.metadata.song_name,
+          'customer_email': charge.metadata.customer_email,
+          'charge_statement_descriptor': charge.description
         }
       });
       return response.sendStatus(200);
@@ -118,7 +120,11 @@ app.prepare().then(() => {
         source: token.id,
         currency: 'usd',
         capture: true,
-        metadata: item
+        description: `online music store purchase ${item.song_artist} - ${item.song_name}`,
+        metadata: {
+          ...item
+          customer_email: token.email
+        }
       });
 
       console.log('stripe charge success');

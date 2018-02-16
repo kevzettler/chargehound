@@ -4,7 +4,9 @@ import SongContainer from '../components/SongContainer';
 export default class IndexPage extends React.Component{
   constructor(props, context){
     super(props, context);
-    this.state.waitingOnPurchase = false;
+    this.state = {
+      waitingOnPurchase: false
+    };
   }
 
   static async getInitialProps({ req }) {
