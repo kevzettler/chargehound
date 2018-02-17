@@ -27,6 +27,10 @@ body, html {
   padding: 2px;
 }
 
+.song-name{
+  margin-bottom: 7px;
+}
+
 .song-image {
   background: #CCC;
   display: block;
@@ -35,6 +39,21 @@ body, html {
   margin-bottom: 5px;
 }
 
+
+.message {
+  display: block;
+  padding: 10px;
+}
+
+.message.success{
+  color: green;
+  border-color: green;
+}
+
+.message.error{
+  color: red;
+  border-color: red;
+}
 
 //generated from http://css3buttongenerator.com/
 button {
@@ -56,6 +75,7 @@ button {
 }
 
 button:hover {
+  cursor: pointer;
   background: #d7dfe3;
   background-image: -webkit-linear-gradient(top, #d7dfe3, #3a444a);
   background-image: -moz-linear-gradient(top, #d7dfe3, #3a444a);
